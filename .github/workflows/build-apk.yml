@@ -5,11 +5,6 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-# Add this section to automatically direct all commands to the right directory if needed
-defaults:
-  run:
-    working-directory: . # Change to ./android if your files are in an android/ folder
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +18,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
+
+    # NEW STEP: Installs a fresh, working gradle wrapper since it's missing in your repo
+    - name: Generate Missing Gradle Wrapper
+      run: |
+        sudo apt-get update && sudo apt-get install -y gradle
+        gradle wrapper
 
     - name: Grant Execute Permission for Gradle
       run: chmod +x ./gradlew
@@ -40,4 +40,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Atmosphere-AI-Online-Release
-        path: "**/build/outputs/apk/release/*.apk" # Uses wildcards to find the APK anywhere it was created
+        path: app/build/outputs/apk/release/*.apk
