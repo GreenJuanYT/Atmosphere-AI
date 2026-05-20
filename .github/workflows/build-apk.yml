@@ -5,6 +5,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+# Add this section to automatically direct all commands to the right directory if needed
+defaults:
+  run:
+    working-directory: . # Change to ./android if your files are in an android/ folder
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +28,6 @@ jobs:
     - name: Grant Execute Permission for Gradle
       run: chmod +x ./gradlew
 
-    # Automatically creates the environment file to connect your app live
     - name: Create Production Environment Config
       run: |
         echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > .env
@@ -36,4 +40,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Atmosphere-AI-Online-Release
-        path: app/build/outputs/apk/release/*.apk
+        path: "**/build/outputs/apk/release/*.apk" # Uses wildcards to find the APK anywhere it was created
