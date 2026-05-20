@@ -1,0 +1,6 @@
+{
+  "name": "Atmosphere",
+  "description": "An AI-powered Weather and Global News Hub. Features real-time weather analytics, AQI, historical forecasts, severe alerts, global headlines, personalized feeds, article bookmarking, and breaking notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
